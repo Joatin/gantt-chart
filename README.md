@@ -1,1 +1,3 @@
-# gantt-chart
+# <gantt-chart>
+
+"<gantt-chart>" is a 

@@ -1,0 +1,148 @@
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="gantt-chart-behavior.html">
+
+
+
+<dom-module id="gantt-chart">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+            }
+            .container {
+                display: flex;
+                flex-direction: row;
+                position: relative;
+            }
+            table {
+                table-layout: fixed;
+            }
+            th {
+                border-right: thin solid black;
+            }
+            .column {
+                width: 64px;
+            }
+            .rowColumn {
+                border-right: thin solid grey;
+            }
+            tbody tr {
+                height: 48px;
+            }
+            thead tr {
+                height: 48px;
+            }
+            .labelContainer {
+                flex-direction: column;
+                display: flex;
+                flex: 0;
+                margin-right: 16px;
+            }
+            .labelContainer paper-button {
+                white-space: nowrap;
+            }
+            .contentContiner{
+                flex-direction: column;
+                display: flex;
+                flex: 1;
+                overflow-x: visible;
+                position: relative;
+            }
+            .headerRow{
+                display: flex;
+                height: 32px;
+                flex-direction: row;
+                border-bottom: thin solid black;
+                width: 100%;
+            }
+            .headerRow span {
+                flex: 1;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+            .overlay{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: transparent;
+            }
+            #rowContainer {
+                position: relative;
+            }
+            .labelRow{
+                height: 48px;
+            }
+        </style>
+        <div class="container">
+            <div class="labelContainer">
+                <div class="headerRow"></div>
+                <template is="dom-repeat" items="{{allRows}}">
+                    <div class="labelRow">
+                        <paper-button>{{item.label}}</paper-button>
+                    </div>
+                </template>
+            </div>
+            <div class="contentContiner">
+                <div class="headerRow">
+                    <template is="dom-repeat" items="{{times}}">
+                        <span>{{item}}</span>
+                    </template>
+                </div>
+                <div id="rowContainer">
+                    <div class="overlay"></div>
+
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'gantt-chart',
+            properties: {
+                mode: {
+                    type: String,
+                    value: 'day'
+                },
+                from: {
+                    type: Date,
+                    value: new Date().setHours(0).setMinutes(0).setSeconds(0).setMilliseconds(0)
+                },
+                to: {
+                    type: Date,
+                    value: new Date().setHours(23).setMinutes(59).setSeconds(0).setMilliseconds(0)
+                },
+                resolution: {
+                    type: Number,
+                    value: 24
+                }
+            },
+            behaviors: [
+                Polymer.GanttChartBehavior
+            ],
+            ready: function() {
+                this.allRows = this.queryAllEffectiveChildren('gantt-row');
+                var self = this;
+                this.allRows.forEach(function (row){
+                    Polymer.dom(self.root).querySelector('#rowContainer').appendChild(row);
+                });
+
+                console.log(this.allRows);
+
+                if(this.mode === 'day'){
+                    this.times = [
+                        '00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'
+                    ];
+                    this.allRows.forEach(function (row){
+                        row._timeFrame = 86400;
+                    });
+                }
+            }
+        });
+    </script>
+</dom-module>

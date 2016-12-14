@@ -1,0 +1,64 @@
+<html>
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+        <title>gantt-chart demo</title>
+
+        <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+        <link rel="import" href="../../iron-icon/iron-icon.html">
+        <link rel="import" href="../../iron-icons/iron-icons.html">
+        <link rel="import" href="../../iron-icons/communication-icons.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+        <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+        <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
+        <link rel="import" href="../gantt-chart.html">
+        <link rel="import" href="../gantt-row.html">
+        <link rel="import" href="../gantt-time.html">
+        <link rel="import" href="../../paper-styles/color.html">
+
+        <style is="custom-style" include="demo-pages-shared-styles">
+            div[role="listbox"] {
+                border: 1px solid #e5e5e5;
+            }
+
+            .avatar {
+                display: inline-block;
+                box-sizing: border-box;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: var(--paper-amber-500);
+            }
+
+            .blue {
+                background-color: var(--paper-light-blue-300);
+            }
+        </style>
+    </head>
+    <body unresolved>
+        <div class="vertical-section-container centered" style="max-width: 1200px;">
+            <h3>Gantt-chart</h3>
+            <demo-snippet>
+                <template>
+                    <gantt-chart from="2016 12 13, 00:00" to="2016 12 13, 23:59">
+                        <gantt-row label="John Persson">
+                            <gantt-time label="School" from="2016 12 13, 12:01" to="2016 12 13, 13:25"></gantt-time>
+                        </gantt-row>
+                        <gantt-row label="Sven Johansson">
+                            <gantt-time label="Work" from="2016 12 13, 02:34" to="2016 12 13, 12:27"></gantt-time>
+                        </gantt-row>
+                        <gantt-row label="Ingela Bengtsson">
+                            <gantt-time label="Driving" from="2016 12 13, 18:45" to="2016 12 13, 21:00"></gantt-time>
+                        </gantt-row>
+                    </gantt-chart>
+                </template>
+            </demo-snippet>
+
+
+        </div>
+    </body>
+</html>

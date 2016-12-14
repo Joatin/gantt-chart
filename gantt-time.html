@@ -1,0 +1,45 @@
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-button/paper-button.html">
+
+
+
+<dom-module id="gantt-time">
+    <template>
+        <style>
+            paper-button{
+                background-color: #00acc1;
+            }
+        </style>
+        <paper-button>{{label}}</paper-button>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'gantt-time',
+            properties: {
+                label: {
+                    type: String
+                },
+                from: Date,
+                to: Date,
+                _timeFrame: {
+                    type: Number,
+                    observer: '_frameChanged'
+                }
+            },
+            ready: function() {
+            },
+            _frameChanged: function(newValue, oldValue){
+                if(newValue){
+                    console.log(this.to);
+                    var seconds = (this.to.getTime() - this.from.getTime()) / 1000;
+                    console.log(seconds);
+                    var width = (100 / newValue) * seconds;
+                    Polymer.dom(this.root).querySelector('paper-button').style.width = width + '%';
+                    // Polymer.dom(this.root).querySelector('paper-button').style.left = width + '%';
+                }
+            }
+        });
+    </script>
+</dom-module>

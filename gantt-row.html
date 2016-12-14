@@ -1,0 +1,48 @@
+
+<link rel="import" href="../polymer/polymer.html">
+
+
+
+<dom-module id="gantt-row">
+    <template>
+        <style>
+            :host {
+                height: 48px;
+            }
+            div {
+                height: 48px;
+            }
+        </style>
+
+        <div id="timeContainer"></div>
+    </template>
+    <script>
+        Polymer({
+            is: 'gantt-row',
+            properties: {
+                label: {
+                    type: String
+                },
+                _timeFrame: {
+                    type: Number,
+                    observer: '_frameChanged'
+                }
+            },
+            ready: function() {
+                this.allTimes = this.queryAllEffectiveChildren('gantt-time');
+                var self = this;
+                this.allTimes.forEach(function (time){
+                    time._timeFrame = self._timeFrame;
+                    Polymer.dom(self.root).querySelector('#timeContainer').appendChild(time);
+                });
+            },
+            _frameChanged: function(newValue, oldValue){
+                if(oldValue && this.allTimes){
+                    this.allTimes.forEach(function (time){
+                        time._timeFrame = self._timeFrame;
+                    });
+                }
+            }
+        });
+    </script>
+</dom-module>
